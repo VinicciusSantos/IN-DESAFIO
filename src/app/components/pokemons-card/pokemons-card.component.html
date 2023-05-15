@@ -1,0 +1,29 @@
+<div
+  [class]="'pokemon-card card' + nameOrId"
+  [class.pokemon-card-selected]="cardConfig.selected"
+  (click)="selectCard()">
+  <header>
+    <span class="pokemon-name">{{ pokemon.name | titlecase }}</span>
+    <span class="pokemon-id">#{{ pokemon.id }}</span>
+  </header>
+  <img
+    class="pokemon-sprite"
+    [src]="pokemon.sprites.front_default"
+    alt="pokemon sprite" />
+  <footer>
+    <ul class="pokemon-charach-list">
+      <li
+        *ngFor="let charach of footerCharacteristcs"
+        [class]="'pokemon-charach charach' + charach[0]">
+        <span class="charach-key">{{ charach[0] }}:</span>
+        <span class="charach-value">{{ pokemon[charach[1]] }}</span>
+      </li>
+    </ul>
+  </footer>
+  <span
+    class="card-background"
+    [class.card-background-visible]="cardConfig.selected"
+    [ngStyle]="{
+      'background-image': 'url(' + pokemon.sprites.front_default + ')'
+    }"></span>
+</div>
