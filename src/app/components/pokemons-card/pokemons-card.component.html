@@ -13,11 +13,13 @@
       alt="pokemon sprite" />
     <footer>
       <ul class="pokemon-charach-list">
-        <li
-          *ngFor="let charach of footerCharacteristcs"
-          [class]="'pokemon-charach charach' + charach[0]">
-          <span class="charach-key">{{ charach[0] }}:</span>
-          <!-- <span class="charach-value">{{ pokemon[charach[1]] }}</span> -->
+        <li class="pokemon-charach charach-height">
+          <span class="charach-key">Altura:</span>
+          <span class="charach-value">{{ pokemon.height }}cm</span>
+        </li>
+        <li class="pokemon-charach charach-weight">
+          <span class="charach-key">Peso:</span>
+          <span class="charach-value">{{ pokemon.weight }}kg</span>
         </li>
       </ul>
     </footer>

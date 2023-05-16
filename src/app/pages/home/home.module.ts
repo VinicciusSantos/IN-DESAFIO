@@ -11,6 +11,7 @@ import { PokemonTypeBadgeComponent } from 'src/app/components/pokemon-type-badge
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import PokemonsService from 'src/app/services/pokemons-service/pokemons.service';
+import { LoadingComponent } from 'src/app/components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import PokemonsService from 'src/app/services/pokemons-service/pokemons.service'
     PokemonsCardComponent,
     PokemonDrawerComponent,
     PokemonTypeBadgeComponent,
+    LoadingComponent,
     ClickAwayDirective,
   ],
   imports: [

@@ -1,9 +1,9 @@
 <div
-  *ngIf="drawerState !== 'closed'"
-  [class]="'pokemon-drawer pokemon-drawer-' + drawerState"
+  *ngIf="drawerConfig.state !== 'closed'"
+  [class]="'pokemon-drawer pokemon-drawer-' + drawerConfig.state"
   clickAway
   (clickAway)="onCloseDrawer()">
-  <ng-container *ngIf="!loading">
+  <ng-container *ngIf="!drawerConfig.loading && !drawerConfig.error && pokemon">
     <h2 class="drawer__pokemon-name">{{ pokemon.name | titlecase }}</h2>
     <div class="drawer__subtitle">
       <span class="drawer__subtitle-pokemon-id">Cód: #{{ pokemon.id }}</span>
@@ -30,4 +30,19 @@
       </div>
     </div>
   </ng-container>
+
+  <app-loading
+    class="drawer__state-loading"
+    *ngIf="drawerConfig.loading"
+    size="40"></app-loading>
+
+  <div class="drawer__state-error" *ngIf="drawerConfig.error">
+    <img
+      src="../../../../assets//404-pikachu.png"
+      alt="pokemon not found"
+      width="50%" />
+    <h3>
+      Não foi possível encontrar o pokémon "{{ drawerConfig.nameOrId }}" :(
+    </h3>
+  </div>
 </div>

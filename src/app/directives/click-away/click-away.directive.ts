@@ -25,7 +25,7 @@ export class ClickAwayDirective {
   }
 
   private clickedInIgnoredElement(targetElement: any) {
-    const ignoredTags = ['.pokemon-card'];
+    const ignoredTags = ['.pokemon-card', '.header__search-button'];
     return !ignoredTags.every(e => !targetElement.closest(e));
   }
 }

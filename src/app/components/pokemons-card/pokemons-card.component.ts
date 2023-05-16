@@ -1,10 +1,9 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PokemonDrawerComponent } from 'src/app/pages/home/pokemon-drawer/pokemon-drawer.component';
-import { POKE_MOCK } from 'src/app/pages/home/pokemons-section/poke-mock';
-import PokemonsService from '../../services/pokemons-service/pokemons.service';
+import { Router } from '@angular/router';
 import { finalize, take } from 'rxjs';
 import { Pokemon } from 'src/app/services/pokemons-service/interfaces';
+
+import PokemonsService from '../../services/pokemons-service/pokemons.service';
 
 interface CardConfig {
   selected: boolean;
@@ -21,10 +20,6 @@ export class PokemonsCardComponent implements OnInit {
   public loading = false;
   public pokemon!: Pokemon;
   public cardConfig: CardConfig = { selected: false };
-  public footerCharacteristcs = Object.entries({
-    Altura: 'height',
-    Peso: 'weight',
-  });
 
   constructor(
     private pokemonsService: PokemonsService,

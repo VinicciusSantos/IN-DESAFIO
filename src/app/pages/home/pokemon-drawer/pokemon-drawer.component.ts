@@ -8,13 +8,22 @@ import {
   Output,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize, take } from 'rxjs/operators';
+import { catchError, finalize, map, take } from 'rxjs/operators';
 import KeyboardService from 'src/app/services/keyboard-controller/keyboard.service';
 import { Pokemon } from 'src/app/services/pokemons-service/interfaces';
 
 import PokemonsService from '../../../services/pokemons-service/pokemons.service';
+import { of } from 'rxjs';
 
 export type DrawerState = 'appearing' | 'open' | 'hiding' | 'closed';
+
+interface DrawerConfig {
+  nameOrId: string;
+  state: DrawerState;
+  loading: boolean;
+  error: boolean;
+}
+
 export interface PokemonSprite {
   link: string;
   name: string;
@@ -31,10 +40,13 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() public pokemon!: Pokemon;
   @Output() public closeEvent = new EventEmitter<void>();
 
-  public drawerState: DrawerState = 'closed';
   public pokemonSprites: PokemonSprite[] = [];
-  public nameOrId!: string;
-  public loading = true;
+  public drawerConfig: DrawerConfig = {
+    loading: false,
+    error: false,
+    state: 'closed',
+    nameOrId: '',
+  };
 
   public get selectedSprite(): PokemonSprite {
     return this.pokemonSprites.find(sprite => sprite.selected) as PokemonSprite;
@@ -54,19 +66,19 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   public onOpenDrawer(): void {
-    if (this.drawerState === 'open') return;
-    this.drawerState = 'appearing';
+    if (this.drawerConfig.state === 'open') return;
+    this.drawerConfig.state = 'appearing';
     setTimeout(() => {
-      this.drawerState = 'open';
+      this.drawerConfig.state = 'open';
       this.isOpen = true;
     }, 400);
   }
 
   public onCloseDrawer = (): void => {
-    if (this.drawerState === 'closed') return;
-    this.drawerState = 'hiding';
+    if (this.drawerConfig.state === 'closed') return;
+    this.drawerConfig.state = 'hiding';
     setTimeout(() => {
-      this.drawerState = 'closed';
+      this.drawerConfig.state = 'closed';
       this.isOpen = false;
       this.closeEvent.emit();
       this.router.navigate(['../']);
@@ -84,23 +96,36 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private fetchPokemonData(): void {
-    this.loading = true;
+    this.drawerConfig = {
+      ...this.drawerConfig,
+      loading: true,
+      error: false,
+    };
     this.pokemonsService
-      .getPokemonInfos(this.nameOrId)
+      .getPokemonInfos(this.drawerConfig.nameOrId)
       .pipe(
         take(1),
-        finalize(() => (this.loading = false))
+        finalize(() => (this.drawerConfig.loading = false)),
+        catchError(_error => {
+          this.drawerConfig.error = true;
+          return of(`Não foi possivel buscar esse pokémon!`);
+        })
       )
       .subscribe(res => {
         this.pokemon = res;
-        this.onOpenDrawer();
         this.checkPokemonSprites();
       });
   }
 
   private checkPokemonNameOrId(): void {
     this.route.params.subscribe((params: any) => {
-      this.nameOrId = params['name'];
+      const error = params['name'] === '';
+      this.drawerConfig = {
+        ...this.drawerConfig,
+        nameOrId: params['name'],
+        error,
+      };
+      if (error) return;
       this.fetchPokemonData();
     });
   }
@@ -112,6 +137,7 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.onOpenDrawer();
     this.checkPokemonNameOrId();
     this.configureKeyboardActions();
   }
