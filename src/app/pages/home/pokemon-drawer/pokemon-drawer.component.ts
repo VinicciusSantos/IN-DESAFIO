@@ -8,8 +8,11 @@ import {
   Output,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { POKE_MOCK } from '../pokemons-section/poke-mock';
+import { finalize, take } from 'rxjs/operators';
 import KeyboardService from 'src/app/services/keyboard-controller/keyboard.service';
+import { Pokemon } from 'src/app/services/pokemons-service/interfaces';
+
+import PokemonsService from '../../../services/pokemons-service/pokemons.service';
 
 export type DrawerState = 'appearing' | 'open' | 'hiding' | 'closed';
 export interface PokemonSprite {
@@ -25,12 +28,13 @@ export interface PokemonSprite {
 })
 export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() public isOpen: boolean = true;
-  @Input() public pokemon!: any;
+  @Input() public pokemon!: Pokemon;
   @Output() public closeEvent = new EventEmitter<void>();
 
-  public state: DrawerState = 'closed';
-
+  public drawerState: DrawerState = 'closed';
   public pokemonSprites: PokemonSprite[] = [];
+  public nameOrId!: string;
+  public loading = true;
 
   public get selectedSprite(): PokemonSprite {
     return this.pokemonSprites.find(sprite => sprite.selected) as PokemonSprite;
@@ -45,31 +49,32 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private keyboardService: KeyboardService
+    private keyboardService: KeyboardService,
+    private pokemonsService: PokemonsService
   ) {}
 
-  public onOpen(): void {
-    if (this.state === 'open') return;
-    this.state = 'appearing';
+  public onOpenDrawer(): void {
+    if (this.drawerState === 'open') return;
+    this.drawerState = 'appearing';
     setTimeout(() => {
-      this.state = 'open';
+      this.drawerState = 'open';
       this.isOpen = true;
     }, 400);
   }
 
-  public onClose = (): void => {
-    if (this.state === 'closed') return;
-    this.state = 'hiding';
+  public onCloseDrawer = (): void => {
+    if (this.drawerState === 'closed') return;
+    this.drawerState = 'hiding';
     setTimeout(() => {
-      this.state = 'closed';
+      this.drawerState = 'closed';
       this.isOpen = false;
       this.closeEvent.emit();
       this.router.navigate(['../']);
     }, 400);
   };
 
-  private getPokemonSprites(): PokemonSprite[] {
-    return Object.entries(this.pokemon.sprites)
+  private checkPokemonSprites(): void {
+    this.pokemonSprites = Object.entries(this.pokemon.sprites)
       .filter(pok => typeof pok[1] === 'string')
       .map(pok => {
         const [name, link] = pok;
@@ -78,24 +83,42 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
       });
   }
 
-  public ngOnInit(): void {
-    this.pokemon = POKE_MOCK;
-    this.pokemonSprites = this.getPokemonSprites();
-    this.onOpen();
+  private fetchPokemonData(): void {
+    this.loading = true;
+    this.pokemonsService
+      .getPokemonInfos(this.nameOrId)
+      .pipe(
+        take(1),
+        finalize(() => (this.loading = false))
+      )
+      .subscribe(res => {
+        this.pokemon = res;
+        this.onOpenDrawer();
+        this.checkPokemonSprites();
+      });
+  }
+
+  private checkPokemonNameOrId(): void {
     this.route.params.subscribe((params: any) => {
-      // console.log(params['name']);
+      this.nameOrId = params['name'];
+      this.fetchPokemonData();
     });
-    this.keyboardService.setActions([
-      {
-        key: 'Escape',
-        action: this.onClose,
-      },
-    ]);
+  }
+
+  private configureKeyboardActions(): void {
+    const keyboardActions = [{ key: 'Escape', action: this.onCloseDrawer }];
+    this.keyboardService.setActions(keyboardActions);
     this.keyboardService.initActions();
   }
 
+  public ngOnInit(): void {
+    this.checkPokemonNameOrId();
+    this.configureKeyboardActions();
+  }
+
   public ngOnChanges(): void {
-    this.isOpen ? this.onOpen() : this.onClose();
+    this.checkPokemonNameOrId();
+    this.isOpen ? this.onOpenDrawer() : this.onCloseDrawer();
   }
 
   public ngOnDestroy(): void {

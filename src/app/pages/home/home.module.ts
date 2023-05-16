@@ -9,6 +9,8 @@ import { RouterModule } from '@angular/router';
 import { ClickAwayDirective } from 'src/app/directives/click-away/click-away.directive';
 import { PokemonTypeBadgeComponent } from 'src/app/components/pokemon-type-badge/pokemon-type-badge.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import PokemonsService from 'src/app/services/pokemons-service/pokemons.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,13 @@ import { FormsModule } from '@angular/forms';
     PokemonTypeBadgeComponent,
     ClickAwayDirective,
   ],
-  imports: [CommonModule, RouterModule, HomeRoutingModule, FormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    HomeRoutingModule,
+    FormsModule,
+    HttpClientModule,
+  ],
+  providers: [PokemonsService],
 })
 export class HomeModule {}

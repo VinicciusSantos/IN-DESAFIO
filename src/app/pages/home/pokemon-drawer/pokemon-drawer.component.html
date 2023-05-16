@@ -1,31 +1,33 @@
 <div
-  *ngIf="state !== 'closed'"
-  [class]="'pokemon-drawer pokemon-drawer-' + state"
+  *ngIf="drawerState !== 'closed'"
+  [class]="'pokemon-drawer pokemon-drawer-' + drawerState"
   clickAway
-  (clickAway)="onClose()">
-  <h2 class="drawer__pokemon-name">{{ pokemon.name | titlecase }}</h2>
-  <div class="drawer__subtitle">
-    <span class="drawer__subtitle-pokemon-id">Cód: #{{ pokemon.id }}</span>
-    <div class="drawer__subtitle-pokemon-types">
-      <span>Tipo:</span>
-      <app-pokemon-type-badge
-        *ngFor="let type of pokemon.types"
-        [pokemonType]="type.type.name"></app-pokemon-type-badge>
+  (clickAway)="onCloseDrawer()">
+  <ng-container *ngIf="!loading">
+    <h2 class="drawer__pokemon-name">{{ pokemon.name | titlecase }}</h2>
+    <div class="drawer__subtitle">
+      <span class="drawer__subtitle-pokemon-id">Cód: #{{ pokemon.id }}</span>
+      <div class="drawer__subtitle-pokemon-types">
+        <span>Tipo:</span>
+        <app-pokemon-type-badge
+          *ngFor="let type of pokemon.types"
+          [pokemonType]="type.type.name"></app-pokemon-type-badge>
+      </div>
     </div>
-  </div>
-  <div class="drawer__pokemon-sprites-container">
-    <img
-      class="drawer__pokemon-sprites-highlighted"
-      [src]="selectedSprite.link"
-      [alt]="selectedSprite.name + '-pokemon-sprite'" />
-    <div class="drawer__pokemon-sprites-all">
+    <div class="drawer__pokemon-sprites-container">
       <img
-        *ngFor="let sprite of pokemonSprites"
-        [src]="sprite.link"
-        alt="sprite.name+'-pokemon-sprite'"
-        class="drawer__pokemon-sprites-sm"
-        [class.drawer__pokemon-sprites-sm-selected]="sprite.selected"
-        (click)="selectedSprite = sprite" />
+        class="drawer__pokemon-sprites-highlighted"
+        [src]="selectedSprite.link"
+        [alt]="selectedSprite.name + '-pokemon-sprite'" />
+      <div class="drawer__pokemon-sprites-all">
+        <img
+          *ngFor="let sprite of pokemonSprites"
+          [src]="sprite.link"
+          alt="sprite.name+'-pokemon-sprite'"
+          class="drawer__pokemon-sprites-sm"
+          [class.drawer__pokemon-sprites-sm-selected]="sprite.selected"
+          (click)="selectedSprite = sprite" />
+      </div>
     </div>
-  </div>
+  </ng-container>
 </div>

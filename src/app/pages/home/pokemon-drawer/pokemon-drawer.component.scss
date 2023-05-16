@@ -64,6 +64,8 @@
     &-all {
       display: flex;
       gap: 14px;
+      max-width: 450px;
+      overflow-x: scroll;
     }
 
     &-sm {

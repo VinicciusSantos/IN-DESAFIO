@@ -25,9 +25,7 @@ export class ClickAwayDirective {
   }
 
   private clickedInIgnoredElement(targetElement: any) {
-    const ignoredTags = ['svg', 'path'];
-    return !ignoredTags.every(e => {
-      return e !== targetElement.nodeName;
-    });
+    const ignoredTags = ['.pokemon-card'];
+    return !ignoredTags.every(e => !targetElement.closest(e));
   }
 }

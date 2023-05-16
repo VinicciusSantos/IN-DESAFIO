@@ -1,4 +1,8 @@
 <section>
   <h2>{{ titulo }}</h2>
-  <app-pokemons-card></app-pokemons-card>
+  <div class="cards-container">
+    <app-pokemons-card
+      *ngFor="let pokemon of pokemonNameList"
+      [nameOrId]="pokemon"></app-pokemons-card>
+  </div>
 </section>

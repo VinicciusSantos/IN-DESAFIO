@@ -26,7 +26,7 @@ export type PokemonType =
   styleUrls: ['./pokemon-type-badge.component.scss'],
 })
 export class PokemonTypeBadgeComponent {
-  @Input() public pokemonType!: PokemonType;
+  @Input() public pokemonType!: string | PokemonType;
 
   public typeColors: Record<PokemonType, string> = {
     normal: '#BFBFBF',
@@ -50,7 +50,7 @@ export class PokemonTypeBadgeComponent {
   };
 
   public get backgroundColor(): string {
-    return this.typeColors[this.pokemonType];
+    return this.typeColors[this.pokemonType as PokemonType];
   }
 
   constructor() {}

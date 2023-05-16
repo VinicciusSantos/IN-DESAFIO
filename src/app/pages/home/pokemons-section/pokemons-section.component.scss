@@ -8,4 +8,9 @@ section {
     line-height: 30px;
     color: #2f3e77;
   }
+
+  div.cards-container {
+    display: flex;
+    gap: 32px;
+  }
 }
