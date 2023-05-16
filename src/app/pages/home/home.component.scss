@@ -78,12 +78,21 @@
 
     &-input {
       width: 333px;
-      height: 44px;
+      height: 39px;
       box-sizing: border-box;
       background: #ffffff;
+      outline: 2px solid #fff !important;
       border: 1px solid #f4f4f4;
       box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
       border-radius: 5px 0px 0px 5px;
+      padding: 0 15px;
+      font-size: 16px;
+      color: #2f3e77;
+      transition-duration: .1s;
+
+      &:focus {
+        outline: 2px solid #2f3d7754 !important;
+      }
     }
 
     &-button {

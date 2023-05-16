@@ -8,6 +8,7 @@ import { PokemonDrawerComponent } from './pokemon-drawer/pokemon-drawer.componen
 import { RouterModule } from '@angular/router';
 import { ClickAwayDirective } from 'src/app/directives/click-away/click-away.directive';
 import { PokemonTypeBadgeComponent } from 'src/app/components/pokemon-type-badge/pokemon-type-badge.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,6 @@ import { PokemonTypeBadgeComponent } from 'src/app/components/pokemon-type-badge
     PokemonTypeBadgeComponent,
     ClickAwayDirective,
   ],
-  imports: [CommonModule, RouterModule],
-  exports: [HomeRoutingModule],
+  imports: [CommonModule, RouterModule, HomeRoutingModule, FormsModule],
 })
 export class HomeModule {}

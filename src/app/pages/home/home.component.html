@@ -10,10 +10,14 @@
       <span class="header__subtitle"
         >Descubra todas as espécies de pokémons</span
       >
-      <div class="header__search">
-        <input type="text" class="header__search-input" />
+      <form class="header__search" (submit)="onSearch()">
+        <input
+          type="search"
+          [(ngModel)]="searchValue"
+          [ngModelOptions]="{ standalone: true }"
+          class="header__search-input" />
         <button class="header__search-button">buscar</button>
-      </div>
+      </form>
     </div>
     <img
       src="../../../assets/main.png"
@@ -26,3 +30,4 @@
     <!-- <app-pokemons-section titulo="Pokédex"></app-pokemons-section> -->
   </main>
 </div>
+<router-outlet></router-outlet>

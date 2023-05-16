@@ -6,7 +6,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { POKE_MOCK } from '../pokemons-section/poke-mock';
 
 export type DrawerState = 'appearing' | 'open' | 'hiding' | 'closed';
 export interface PokemonSprite {
@@ -21,7 +22,7 @@ export interface PokemonSprite {
   styleUrls: ['./pokemon-drawer.component.scss'],
 })
 export class PokemonDrawerComponent implements OnInit, OnChanges {
-  @Input() public isOpen: boolean = false;
+  @Input() public isOpen: boolean = true;
   @Input() public pokemon!: any;
   @Output() public closeEvent = new EventEmitter<void>();
 
@@ -39,7 +40,7 @@ export class PokemonDrawerComponent implements OnInit, OnChanges {
     );
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   public onOpen(): void {
     if (this.state === 'open') return;
@@ -51,13 +52,13 @@ export class PokemonDrawerComponent implements OnInit, OnChanges {
   }
 
   public onClose = (): void => {
-    this.router.navigate(['../']);
     if (this.state === 'closed') return;
     this.state = 'hiding';
     setTimeout(() => {
       this.state = 'closed';
       this.isOpen = false;
       this.closeEvent.emit();
+      this.router.navigate(['../']);
     }, 400);
   };
 
@@ -72,7 +73,12 @@ export class PokemonDrawerComponent implements OnInit, OnChanges {
   }
 
   public ngOnInit(): void {
+    this.pokemon = POKE_MOCK;
     this.pokemonSprites = this.getPokemonSprites();
+    this.onOpen();
+    this.route.params.subscribe((params: any) => {
+      // console.log(params['name']);
+    });
   }
 
   public ngOnChanges(): void {
