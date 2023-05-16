@@ -15,7 +15,9 @@ interface CardConfig {
 export class PokemonsCardComponent implements OnInit {
   @Input() public nameOrId!: string;
 
-  @HostListener('document:click') checkActivedRoute() {
+  @HostListener('document:click')
+  @HostListener('document:keydown')
+  checkActivedRoute() {
     const drawerTransitionDuration = 450;
     setTimeout(this.checkIfIsInPokemonPage, drawerTransitionDuration);
   }

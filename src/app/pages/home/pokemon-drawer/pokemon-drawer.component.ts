@@ -3,11 +3,13 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { POKE_MOCK } from '../pokemons-section/poke-mock';
+import KeyboardService from 'src/app/services/keyboard-controller/keyboard.service';
 
 export type DrawerState = 'appearing' | 'open' | 'hiding' | 'closed';
 export interface PokemonSprite {
@@ -21,7 +23,7 @@ export interface PokemonSprite {
   templateUrl: './pokemon-drawer.component.html',
   styleUrls: ['./pokemon-drawer.component.scss'],
 })
-export class PokemonDrawerComponent implements OnInit, OnChanges {
+export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() public isOpen: boolean = true;
   @Input() public pokemon!: any;
   @Output() public closeEvent = new EventEmitter<void>();
@@ -40,7 +42,11 @@ export class PokemonDrawerComponent implements OnInit, OnChanges {
     );
   }
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private keyboardService: KeyboardService
+  ) {}
 
   public onOpen(): void {
     if (this.state === 'open') return;
@@ -79,9 +85,20 @@ export class PokemonDrawerComponent implements OnInit, OnChanges {
     this.route.params.subscribe((params: any) => {
       // console.log(params['name']);
     });
+    this.keyboardService.setActions([
+      {
+        key: 'Escape',
+        action: this.onClose,
+      },
+    ]);
+    this.keyboardService.initActions();
   }
 
   public ngOnChanges(): void {
     this.isOpen ? this.onOpen() : this.onClose();
+  }
+
+  public ngOnDestroy(): void {
+    this.keyboardService.endActions();
   }
 }

@@ -108,6 +108,10 @@
       line-height: 30px;
       text-align: center;
       color: #ffffff;
+
+      &:focus {
+        outline: 2px solid #d35054 !important;
+      }
     }
   }
 
