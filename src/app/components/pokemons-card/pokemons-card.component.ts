@@ -34,8 +34,9 @@ export class PokemonsCardComponent implements OnInit {
   }
 
   public async selectCard() {
+    if (this.cardConfig.selected) return;
     this.cardConfig.selected = !this.cardConfig.selected;
-    this.router.navigate(['/pokemons', this.pokemon.name]);
+    return this.router.navigate(['/pokemons', this.pokemon.name]);
   }
 
   private checkIfIsInPokemonPage = () => {
@@ -57,6 +58,7 @@ export class PokemonsCardComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.checkActivedRoute();
     this.fetchPokemonData();
   }
 }
