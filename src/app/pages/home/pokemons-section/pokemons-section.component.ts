@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./pokemons-section.component.scss'],
 })
 export class PokemonsSectionComponent {
-  @Input() public title!: string;
+  @Input() public titulo!: string;
 
   constructor() {}
 }

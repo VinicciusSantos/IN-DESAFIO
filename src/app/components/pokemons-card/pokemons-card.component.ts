@@ -25,6 +25,10 @@ export class PokemonsCardComponent implements OnInit {
 
   constructor() {}
 
+  public onCloseDrawer(): void {
+    this.cardConfig.selected = false;
+  }
+
   public selectCard() {
     this.cardConfig.selected = !this.cardConfig.selected;
   }

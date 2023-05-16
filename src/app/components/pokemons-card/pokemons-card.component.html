@@ -1,6 +1,7 @@
 <div
   [class]="'pokemon-card card' + nameOrId"
   [class.pokemon-card-selected]="cardConfig.selected"
+  [routerLink]="[pokemon.name]"
   (click)="selectCard()">
   <header>
     <span class="pokemon-name">{{ pokemon.name | titlecase }}</span>
@@ -27,3 +28,8 @@
       'background-image': 'url(' + pokemon.sprites.front_default + ')'
     }"></span>
 </div>
+<app-pokemon-drawer
+  *ngIf="cardConfig.selected"
+  [pokemon]="pokemon"
+  [isOpen]="cardConfig.selected"
+  (closeEvent)="onCloseDrawer()"></app-pokemon-drawer>
