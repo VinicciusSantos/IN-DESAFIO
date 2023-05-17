@@ -22,7 +22,7 @@ interface CardConfig {
   templateUrl: './pokemons-card.component.html',
   styleUrls: ['./pokemons-card.component.scss'],
 })
-export class PokemonsCardComponent implements OnInit, OnChanges {
+export class PokemonsCardComponent implements OnChanges {
   @Input() public nameOrId!: string;
 
   public pokemon!: Pokemon;
@@ -88,10 +88,6 @@ export class PokemonsCardComponent implements OnInit, OnChanges {
       .subscribe(res => {
         this.pokemon = res;
       });
-  }
-
-  public ngOnInit(): void {
-    this.fetchPokemonData();
   }
 
   public ngOnChanges(): void {

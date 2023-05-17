@@ -21,11 +21,6 @@ export default class PokemonsService {
     limit: number,
     offset: number
   ): Observable<PokemonRange> {
-    // console.log(
-    //   '🚀 ~ file: pokemons.service.ts:24 ~ PokemonsService ~ limit:',
-    //   limit
-    // );
-    // return of({} as any);
     return this.http.get(
       `${this.API_PATH}/pokemon?limit=${limit}&offset=${offset}`
     ) as Observable<PokemonRange>;
