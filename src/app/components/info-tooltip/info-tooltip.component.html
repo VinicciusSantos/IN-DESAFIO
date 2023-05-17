@@ -1,0 +1,14 @@
+<div class="tooltip-container">
+  <img
+    class="tooltip-trigger"
+    src="../../../assets/info-icon.png"
+    alt="info-icon"
+    (mouseenter)="showTooltip()"
+    (mouseleave)="hideTooltip()"
+    width="11px" />
+  <ng-content select="[tooltip-trigger]"></ng-content>
+  <div class="tooltip-content" *ngIf="isTooltipVisible" [style.width]="width">
+    {{ message }}
+    <ng-content select="[tooltip-content]"></ng-content>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.tooltip-content {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  transform: translate(20px, -20px);
+
+  &:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: #333;
+    transform: translate(-30%, 4px) rotate(45deg);
+  }
+}

@@ -1,6 +1,11 @@
 <section>
   <header>
-    <h2>{{ titulo }}</h2>
+    <div class="section-title">
+      <h2>{{ titulo }}</h2>
+      <app-info-tooltip
+        [message]="tooltipMessage"
+        width="200px"></app-info-tooltip>
+    </div>
     <div class="pagination" *ngIf="paginationPosition === 'top'">
       <app-pagination-button
         direction="left"

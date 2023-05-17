@@ -27,6 +27,12 @@ export class PokemonsSectionComponent implements OnInit, AfterContentChecked {
   public visibleColumns: number = 0;
   public firstVisibleCardIndex = 0;
 
+  public get tooltipMessage(): string {
+    const customSelectionMsg = `Listas dos ${this.pokemonsNameList.length} pokémons que atendem o requisito "${this.titulo}"`;
+    const automaticMsg = 'Lista de todos os pokémons existentes';
+    return this.type === 'customSelection' ? customSelectionMsg : automaticMsg;
+  }
+
   constructor(
     private elementRef: ElementRef,
     private pokemonsService: PokemonsService
