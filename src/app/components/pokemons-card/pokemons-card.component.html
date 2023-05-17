@@ -2,7 +2,7 @@
   [class]="'pokemon-card card' + nameOrId"
   [class.pokemon-card-selected]="cardConfig.selected"
   (click)="selectCard()">
-  <ng-container *ngIf="!loading">
+  <ng-container *ngIf="!cardConfig.loading && !cardConfig.error && pokemon">
     <header>
       <span class="pokemon-name">{{ pokemon.name | titlecase }}</span>
       <span class="pokemon-id">#{{ pokemon.id }}</span>
@@ -30,4 +30,17 @@
         'background-image': 'url(' + pokemon.sprites.front_default + ')'
       }"></span>
   </ng-container>
+
+  <app-loading
+    class="pokemon-card__state-loading"
+    *ngIf="cardConfig.loading"
+    size="30"></app-loading>
+
+  <div class="pokemon-card__state-error" *ngIf="cardConfig.error">
+    <img
+      src="../../../assets//pikachu-surpreso.png"
+      alt="pokemon not found"
+      width="30%" />
+    <span>Erro ao buscar esse pokémon :(</span>
+  </div>
 </div>

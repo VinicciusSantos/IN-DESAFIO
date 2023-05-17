@@ -26,8 +26,17 @@
       height="464px" />
   </header>
   <main>
-    <app-pokemons-section titulo="Mais procurados"></app-pokemons-section>
-    <!-- <app-pokemons-section titulo="Pokédex"></app-pokemons-section> -->
+    <app-pokemons-section
+      titulo="Mais procurados"
+      type="customSelection"
+      paginationPosition="sides"
+      [pokemonsNameList]="mostSearchedNames"
+      [rows]="1"></app-pokemons-section>
+    <app-pokemons-section
+      titulo="Pokédex"
+      type="automatic"
+      paginationPosition="top"
+      [rows]="2"></app-pokemons-section>
   </main>
 </div>
 <router-outlet></router-outlet>

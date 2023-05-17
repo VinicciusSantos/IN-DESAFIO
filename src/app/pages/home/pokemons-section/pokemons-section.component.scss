@@ -1,16 +1,51 @@
 section {
   width: 1238px;
+  padding: 0 25px 50px;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
-  h2 {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 30px;
-    color: #2f3e77;
+  header {
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 30px;
+      line-height: 30px;
+      color: #2f3e77;
+    }
+
+    .pagination {
+      display: flex;
+      gap: 8px;
+    }
   }
 
   div.cards-container {
-    display: flex;
-    gap: 32px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 32px;
+    width: 1238px;
+    padding: 0 0 30px;
+    position: relative;
   }
+}
+
+.pagination__button-sides-right, .pagination__button-sides-left {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+}
+
+.pagination__button-sides-right {
+  right: 0;
+  transform: translate(50%, -100%);
+}
+
+.pagination__button-sides-left {  
+  left: 0;
+  transform: translate(-50%, -100%);
 }

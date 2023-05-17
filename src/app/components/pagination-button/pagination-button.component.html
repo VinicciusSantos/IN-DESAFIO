@@ -1,0 +1,7 @@
+<button
+  [ngClass]="{
+    'pagination__btn-decrease': direction === 'left',
+    'pagination__btn-increase': direction === 'right'
+  }"
+  [disabled]="disabled"
+  (click)="clickEvent.emit()"></button>

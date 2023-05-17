@@ -19,6 +19,18 @@ export interface Pokemon {
   weight: number;
 }
 
+export interface Result {
+  name: string;
+  url: string;
+}
+
+export interface PokemonRange {
+  count: number;
+  next: string;
+  previous?: any;
+  results: Result[];
+}
+
 export interface Ability {
   ability: AbilityDetails;
   is_hidden: boolean;

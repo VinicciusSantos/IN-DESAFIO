@@ -14,4 +14,17 @@ export class HomeComponent {
   public onSearch(): void {
     this.router.navigate(['/pokemons', this.searchValue]);
   }
+
+  public mostSearchedNames = [
+    'Charmeleon',
+    'Squirtle',
+    'Caterpie',
+    'Pikachu',
+    'Blastoise',
+    'Ditto',
+    'Mew',
+    'Gengar',
+    'Arcanine',
+    'Bulbasaur',
+  ];
 }

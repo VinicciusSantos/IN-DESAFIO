@@ -1,8 +1,37 @@
 <section>
-  <h2>{{ titulo }}</h2>
-  <div class="cards-container">
-    <app-pokemons-card
-      *ngFor="let pokemon of pokemonNameList"
-      [nameOrId]="pokemon"></app-pokemons-card>
+  <header>
+    <h2>{{ titulo }}</h2>
+    <div class="pagination" *ngIf="paginationPosition === 'top'">
+      <app-pagination-button
+        direction="left"
+        [disabled]="isDecreaseButtonDisabled()"
+        (clickEvent)="onPaginationDown()"></app-pagination-button>
+      <app-pagination-button
+        direction="right"
+        [disabled]="isIncreaseButtonDisabled()"
+        (clickEvent)="onPaginationUp()"></app-pagination-button>
+    </div>
+  </header>
+  <div
+    class="cards-container"
+    [style.grid-template-rows]="'repeat(' + rows + ' , 1fr)'">
+    <app-pagination-button
+      *ngIf="paginationPosition === 'sides'"
+      class="pagination__button-sides-left"
+      direction="left"
+      [disabled]="isDecreaseButtonDisabled()"
+      (clickEvent)="onPaginationDown()"></app-pagination-button>
+    <ng-container *ngFor="let pokemon of pokemonsNameList; let i = index">
+      <app-pokemons-card
+        *ngIf="isCardVisible(i)"
+        class="pokemon-card"
+        [nameOrId]="pokemon"></app-pokemons-card>
+    </ng-container>
+    <app-pagination-button
+      *ngIf="paginationPosition === 'sides'"
+      class="pagination__button-sides-right"
+      direction="right"
+      [disabled]="isIncreaseButtonDisabled()"
+      (clickEvent)="onPaginationUp()"></app-pagination-button>
   </div>
 </section>

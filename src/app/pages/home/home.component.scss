@@ -118,4 +118,11 @@
   &__banner {
     margin-right: 100px;
   }
+
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }

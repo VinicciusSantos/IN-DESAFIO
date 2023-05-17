@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import PokemonsService from 'src/app/services/pokemons-service/pokemons.service';
 import { LoadingComponent } from 'src/app/components/loading/loading.component';
+import { PaginationButtonComponent } from 'src/app/components/pagination-button/pagination-button.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LoadingComponent } from 'src/app/components/loading/loading.component';
     PokemonDrawerComponent,
     PokemonTypeBadgeComponent,
     LoadingComponent,
+    PaginationButtonComponent,
     ClickAwayDirective,
   ],
   imports: [
