@@ -73,7 +73,7 @@ export class PokemonsSectionComponent implements OnInit, AfterContentChecked {
     if (this.type === 'automatic') return false;
     const nextVisibleIndex =
       this.firstVisibleCardIndex + this.rows * this.visibleColumns;
-    if (nextVisibleIndex > this.pokemonsNameList!.length) return true;
+    if (nextVisibleIndex >= this.pokemonsNameList!.length) return true;
     return false;
   }
 
