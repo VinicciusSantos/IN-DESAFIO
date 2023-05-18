@@ -13,6 +13,7 @@ export interface LineChartColumn {
 })
 export class LineGraphComponent implements OnInit {
   @Input() public lines = ['20%', '50%', '80%'];
+  @Input() public columns: LineChartColumn[] = [];
   @Input() public colors = [
     '#C4F789',
     '#F7802A',
@@ -21,20 +22,30 @@ export class LineGraphComponent implements OnInit {
     '#6884e8',
     '#ffa3fd',
   ];
-  @Input() public columns: LineChartColumn[] = [];
+
   public bars: LineChartColumn[] = [];
   public hoveredIndex: number | null = null;
 
   constructor() {}
 
-  public ngOnInit(): void {
+  public getBarHeight(bar: LineChartColumn): string {
+    return Math.min(100, bar.height) + '%';
+  }
+
+  private resetHeights(): void {
     this.bars = this.columns.map((column, index) => {
       return { ...column, height: 0, color: this.colors[index] };
     });
-    setTimeout(() => {
-      this.bars.forEach((bar, index) => {
-        bar.height = this.columns[index].height;
-      });
-    }, 200);
+  }
+
+  private growChartBars(): void {
+    this.bars.forEach((bar, index) => {
+      bar.height = this.columns[index].height;
+    });
+  }
+
+  public ngOnInit(): void {
+    this.resetHeights();
+    setTimeout(() => this.growChartBars(), 200);
   }
 }

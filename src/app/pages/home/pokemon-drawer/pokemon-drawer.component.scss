@@ -11,8 +11,9 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   animation: openDrawer 400ms forwards;
   z-index: 2;
-  overflow-y: scroll;
+  overflow: hidden scroll;
 }
+
 
 section {
   h3 {
@@ -79,7 +80,7 @@ section {
       gap: 14px;
       max-width: 450px;
       padding-bottom: 10px;
-      overflow-x: scroll;
+      overflow-y: hidden !important;
     }
 
     &-sm {
@@ -88,6 +89,7 @@ section {
       background-color: #f7f7f7;
       border-radius: 50%;
       border: 1px solid #eff4fa;
+      cursor: pointer;
 
       &-selected {
         border: 1px solid rgba(31, 21, 58, 0.116);

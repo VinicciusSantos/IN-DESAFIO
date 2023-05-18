@@ -2,7 +2,7 @@
   <div class="line-chart">
     <div
       *ngFor="let bar of bars; let i = index"
-      [style.height]="bar.height + '%'"
+      [style.height]="getBarHeight(bar)"
       [style.background-color]="bar.color"
       (mouseenter)="hoveredIndex = i"
       (mouseleave)="hoveredIndex = null"

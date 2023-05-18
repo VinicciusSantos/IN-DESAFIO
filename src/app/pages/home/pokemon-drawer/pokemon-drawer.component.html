@@ -19,11 +19,14 @@
         class="drawer__pokemon-sprites-highlighted"
         [src]="selectedSprite.link"
         [alt]="selectedSprite.name + '-pokemon-sprite'" />
-      <div class="drawer__pokemon-sprites-all">
+      <div
+        class="drawer__pokemon-sprites-all"
+        [style.overflow-x]="pokemonSprites.length > 4 ? 'scroll' : 'hidden'">
         <img
           *ngFor="let sprite of pokemonSprites"
           [src]="sprite.link"
-          alt="sprite.name+'-pokemon-sprite'"
+          [alt]="sprite.name + '-pokemon-sprite'"
+          [title]="sprite.name + ' ' + pokemon.name"
           class="drawer__pokemon-sprites-sm"
           [class.drawer__pokemon-sprites-sm-selected]="sprite.selected"
           (click)="selectedSprite = sprite" />

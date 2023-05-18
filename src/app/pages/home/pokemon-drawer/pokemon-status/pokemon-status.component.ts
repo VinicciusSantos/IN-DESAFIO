@@ -22,10 +22,7 @@ export class PokemonStatusComponent implements OnInit {
   public ngOnInit(): void {
     this.columns = this.stats
       .map(stat => {
-        const height = Math.min(
-          Math.round((stat.base_stat / this.maxPokemonPont) * 100),
-          100
-        );
+        const height = Math.round((stat.base_stat / this.maxPokemonPont) * 100);
         return {
           height,
           label: stat.stat.name,
