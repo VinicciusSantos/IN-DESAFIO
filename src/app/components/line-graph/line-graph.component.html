@@ -1,0 +1,24 @@
+<div class="line-chart-container">
+  <div class="line-chart">
+    <div
+      *ngFor="let bar of bars; let i = index"
+      [style.height]="bar.height + '%'"
+      [style.background-color]="bar.color"
+      (mouseenter)="hoveredIndex = i"
+      (mouseleave)="hoveredIndex = null"
+      class="line-chart__bar"
+      [class.line-chart__bar-hovered]="hoveredIndex === i"
+      [class.line-chart__bar-hidden]="
+        hoveredIndex !== null && hoveredIndex !== i
+      ">
+      <span class="line-chart__bar-height">{{ bar.height }}</span>
+      <span class="line-chart__bar-label">{{ bar.label }}</span>
+    </div>
+    <span
+      class="line-chart__line"
+      *ngFor="let line of lines"
+      [style.bottom]="line"
+      >{{ line }}</span
+    >
+  </div>
+</div>

@@ -29,6 +29,10 @@
           (click)="selectedSprite = sprite" />
       </div>
     </div>
+    <app-pokemon-status [stats]="pokemon.stats"></app-pokemon-status>
+    <app-pokemon-infos [pokemon]="pokemon"></app-pokemon-infos>
+    <app-pokemon-description
+      [description]="pokemonDescription"></app-pokemon-description>
   </ng-container>
 
   <app-loading

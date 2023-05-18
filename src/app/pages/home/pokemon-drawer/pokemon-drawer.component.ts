@@ -8,12 +8,15 @@ import {
   Output,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, finalize, map, take } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, finalize, take } from 'rxjs/operators';
 import KeyboardService from 'src/app/services/keyboard-controller/keyboard.service';
-import { Pokemon } from 'src/app/services/pokemons-service/interfaces';
+import {
+  FlavorTextEntry,
+  Pokemon,
+} from 'src/app/services/pokemons-service/interfaces';
 
 import PokemonsService from '../../../services/pokemons-service/pokemons.service';
-import { of } from 'rxjs';
 
 export type DrawerState = 'appearing' | 'open' | 'hiding' | 'closed';
 
@@ -41,6 +44,7 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   @Output() public closeEvent = new EventEmitter<void>();
 
   public pokemonSprites: PokemonSprite[] = [];
+  public pokemonDescription = '';
   public drawerConfig: DrawerConfig = {
     loading: false,
     error: false,
@@ -86,6 +90,7 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   private checkPokemonSprites(): void {
+    if (this.drawerConfig.error) return;
     this.pokemonSprites = Object.entries(this.pokemon.sprites)
       .filter(pok => typeof pok[1] === 'string')
       .map(pok => {
@@ -120,6 +125,9 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
   private checkPokemonNameOrId(): void {
     this.route.params.subscribe((params: any) => {
       const error = params['name'] === '';
+      if (this.drawerConfig.nameOrId !== params['name']) {
+        this.fetchPokemonDescription();
+      }
       this.drawerConfig = {
         ...this.drawerConfig,
         nameOrId: params['name'],
@@ -127,6 +135,7 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
       };
       if (error) return;
       this.fetchPokemonData();
+      this.fetchPokemonDescription();
     });
   }
 
@@ -134,6 +143,18 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
     const keyboardActions = [{ key: 'Escape', action: this.onCloseDrawer }];
     this.keyboardService.setActions(keyboardActions);
     this.keyboardService.initActions();
+  }
+
+  private fetchPokemonDescription() {
+    this.pokemonsService
+      .getPokemonSpecie(this.drawerConfig.nameOrId)
+      .pipe(take(1))
+      .subscribe(res => {
+        if (!res.flavor_text_entries) return;
+        this.pokemonDescription = res.flavor_text_entries.find(
+          el => el.language.name === 'en'
+        )!.flavor_text;
+      });
   }
 
   public ngOnInit(): void {

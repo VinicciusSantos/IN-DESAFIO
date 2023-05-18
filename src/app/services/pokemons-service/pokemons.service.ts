@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Pokemon, PokemonRange } from './interfaces';
+import { Pokemon, PokemonRange, PokemonSpecie } from './interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +24,11 @@ export default class PokemonsService {
     return this.http.get(
       `${this.API_PATH}/pokemon?limit=${limit}&offset=${offset}`
     ) as Observable<PokemonRange>;
+  }
+
+  public getPokemonSpecie(nameOrId: string): Observable<PokemonSpecie> {
+    return this.http.get(
+      `${this.API_PATH}/pokemon-species/${nameOrId}`
+    ) as Observable<PokemonSpecie>;
   }
 }

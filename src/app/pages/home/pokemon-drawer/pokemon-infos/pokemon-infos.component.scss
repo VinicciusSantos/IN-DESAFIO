@@ -1,0 +1,22 @@
+.drawer__pokemon-infos {
+  margin-bottom: 40px;
+
+  ul {
+    margin-top: 11px;
+    width: 100%;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        font-family: 'Nunito';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 30px;
+        color: #233674;
+      }
+    }
+  }
+}

@@ -14,6 +14,10 @@ import PokemonsService from 'src/app/services/pokemons-service/pokemons.service'
 import { LoadingComponent } from 'src/app/components/loading/loading.component';
 import { PaginationButtonComponent } from 'src/app/components/pagination-button/pagination-button.component';
 import { InfoTooltipComponent } from 'src/app/components/info-tooltip/info-tooltip.component';
+import { PokemonDescriptionComponent } from './pokemon-drawer/pokemon-description/pokemon-description.component';
+import { PokemonStatusComponent } from './pokemon-drawer/pokemon-status/pokemon-status.component';
+import { PokemonInfosComponent } from './pokemon-drawer/pokemon-infos/pokemon-infos.component';
+import { LineGraphComponent } from '../../components/line-graph/line-graph.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,10 @@ import { InfoTooltipComponent } from 'src/app/components/info-tooltip/info-toolt
     PaginationButtonComponent,
     InfoTooltipComponent,
     ClickAwayDirective,
+    PokemonDescriptionComponent,
+    PokemonStatusComponent,
+    PokemonInfosComponent,
+    LineGraphComponent,
   ],
   imports: [
     CommonModule,
