@@ -17,6 +17,7 @@ import {
 } from 'src/app/services/pokemons-service/interfaces';
 
 import PokemonsService from '../../../services/pokemons-service/pokemons.service';
+import { TitleService } from '../../../services/title-service/title.service';
 
 export type DrawerState = 'appearing' | 'open' | 'hiding' | 'closed';
 
@@ -66,7 +67,8 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private keyboardService: KeyboardService,
-    private pokemonsService: PokemonsService
+    private pokemonsService: PokemonsService,
+    private titleService: TitleService
   ) {}
 
   public onOpenDrawer(): void {
@@ -85,6 +87,7 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
       this.drawerConfig.state = 'closed';
       this.isOpen = false;
       this.closeEvent.emit();
+      this.titleService.changeTitle('Pokemons', 'pokeball.png');
       this.router.navigate(['../']);
     }, 400);
   };
@@ -113,12 +116,15 @@ export class PokemonDrawerComponent implements OnInit, OnChanges, OnDestroy {
         finalize(() => (this.drawerConfig.loading = false)),
         catchError(_error => {
           this.drawerConfig.error = true;
+          this.titleService.changeFaviconUrl(null);
           return of(`Não foi possivel buscar esse pokémon!`);
         })
       )
       .subscribe(res => {
         this.pokemon = res;
         this.checkPokemonSprites();
+        this.titleService.changeTitle(res.name);
+        this.titleService.changeFaviconUrl(res.sprites.front_default);
       });
   }
 
