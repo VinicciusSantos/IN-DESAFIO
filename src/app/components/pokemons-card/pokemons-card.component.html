@@ -1,5 +1,5 @@
 <div
-  [class]="'pokemon-card card' + nameOrId"
+  [class]="'pokemon-card card' + nameOrId + ' card-' + size"
   [class.pokemon-card-selected]="cardConfig.selected"
   (click)="selectCard()">
   <ng-container *ngIf="!cardConfig.loading && !cardConfig.error && pokemon">

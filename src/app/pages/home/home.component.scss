@@ -18,11 +18,22 @@
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 60px 0px;
-  width: 1180px;
+  padding: 120px 0px 60px;
+  width: min(1180px, calc(100% - 100px));
+  position: relative;
+
+  @media screen and (max-width: 1111px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 50px;
+  }
 
   &__logo {
     margin-bottom: 10px;
+    width: 110px;
+    top: 60px;
+    position: absolute;
   }
 
   &__title {
@@ -124,11 +135,6 @@
       }
     }
   }
-
-  &__banner {
-    margin-right: 100px;
-  }
-
 }
 
 main {

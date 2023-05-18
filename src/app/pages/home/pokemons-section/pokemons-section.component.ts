@@ -1,5 +1,6 @@
 import { catchError, of, take } from 'rxjs';
 import PokemonsService from '../../../services/pokemons-service/pokemons.service';
+import { PokemonCardSizes } from '../../../components/pokemons-card/pokemons-card.component';
 import {
   Component,
   Input,
@@ -33,6 +34,10 @@ export class PokemonsSectionComponent implements OnInit, AfterContentChecked {
     return this.type === 'customSelection' ? customSelectionMsg : automaticMsg;
   }
 
+  public get cardSize(): PokemonCardSizes {
+    return this.visibleColumns <= 2 ? 'md' : 'sm';
+  }
+
   constructor(
     private elementRef: ElementRef,
     private pokemonsService: PokemonsService
@@ -42,8 +47,8 @@ export class PokemonsSectionComponent implements OnInit, AfterContentChecked {
   public checkSizes() {
     const containerElement =
       this.elementRef.nativeElement.querySelector('.cards-container');
-    const quantColumns = containerElement.offsetWidth / 210;
-    this.visibleColumns = Math.floor(quantColumns);
+    const containerWidth = containerElement.offsetWidth;
+    this.visibleColumns = this.determineVisibleColumns(containerWidth);
   }
 
   public onPaginationDown(): void {
@@ -67,7 +72,7 @@ export class PokemonsSectionComponent implements OnInit, AfterContentChecked {
   public isIncreaseButtonDisabled(): boolean {
     if (this.type === 'automatic') return false;
     const nextVisibleIndex =
-      this.firstVisibleCardIndex + this.rows * this.visibleColumns + 1;
+      this.firstVisibleCardIndex + this.rows * this.visibleColumns;
     if (nextVisibleIndex > this.pokemonsNameList!.length) return true;
     return false;
   }
@@ -75,8 +80,16 @@ export class PokemonsSectionComponent implements OnInit, AfterContentChecked {
   public isCardVisible(index: number): boolean {
     return (
       index >= this.firstVisibleCardIndex &&
-      index <= this.rows * this.visibleColumns + this.firstVisibleCardIndex
+      index <= this.rows * this.visibleColumns + this.firstVisibleCardIndex - 1
     );
+  }
+
+  private determineVisibleColumns(containerWidth: number): number {
+    if (containerWidth > 1220) return 5;
+    if (containerWidth >= 1000) return 4;
+    if (containerWidth >= 729) return 3;
+    if (containerWidth >= 590) return 2;
+    return 1;
   }
 
   private fetchPokemonNames(limit: number, offset: number): void {

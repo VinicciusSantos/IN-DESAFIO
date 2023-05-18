@@ -1,10 +1,14 @@
 section {
-  width: 1238px;
+  width: min(1238px, calc(100vw - 100px));
   padding: 0 25px 50px;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @media screen and (max-width: 690px) {
+    width: min-content;
+  }
 
   header {
     display: flex;
@@ -32,11 +36,16 @@ section {
 
   div.cards-container {
     display: grid;
-    grid-auto-flow: column;
-    grid-gap: 32px;
-    width: 1238px;
+    grid-gap: 32px 0;
     padding: 0 0 30px;
     position: relative;
+    width: 100%;
+    grid-auto-flow: column;
+    justify-content: space-between;
+
+    .pokemon-card {
+      width: min-content;
+    }
   }
 }
 

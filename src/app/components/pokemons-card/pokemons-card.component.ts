@@ -11,6 +11,7 @@ import { Pokemon } from 'src/app/services/pokemons-service/interfaces';
 
 import PokemonsService from '../../services/pokemons-service/pokemons.service';
 
+export type PokemonCardSizes = 'sm' | 'md' | 'lg';
 interface CardConfig {
   selected: boolean;
   loading: boolean;
@@ -23,6 +24,7 @@ interface CardConfig {
   styleUrls: ['./pokemons-card.component.scss'],
 })
 export class PokemonsCardComponent implements OnChanges {
+  @Input() public size: PokemonCardSizes = 'md';
   @Input() public nameOrId!: string;
 
   public pokemon!: Pokemon;

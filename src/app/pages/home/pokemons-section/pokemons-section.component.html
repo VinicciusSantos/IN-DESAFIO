@@ -19,7 +19,8 @@
   </header>
   <div
     class="cards-container"
-    [style.grid-template-rows]="'repeat(' + rows + ' , 1fr)'">
+    [style.grid-template-rows]="'repeat(' + rows + ' , 1fr)'"
+    [style.grid-template-columns]="'repeat(' + visibleColumns + ' , auto-fit)'">
     <app-pagination-button
       *ngIf="paginationPosition === 'sides'"
       class="pagination__button-sides-left"
@@ -29,6 +30,7 @@
     <ng-container *ngFor="let pokemon of pokemonsNameList; let i = index">
       <app-pokemons-card
         *ngIf="isCardVisible(i)"
+        [size]="cardSize"
         class="pokemon-card"
         [nameOrId]="pokemon"></app-pokemons-card>
     </ng-container>

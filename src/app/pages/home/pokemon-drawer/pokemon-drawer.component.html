@@ -52,4 +52,8 @@
       Não foi possível encontrar o pokémon "{{ drawerConfig.nameOrId }}" :(
     </h3>
   </div>
+
+  <app-pagination-button
+    class="drawer__return-button"
+    (clickEvent)="onCloseDrawer()"></app-pagination-button>
 </div>

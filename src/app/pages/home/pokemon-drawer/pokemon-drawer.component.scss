@@ -12,8 +12,11 @@
   animation: openDrawer 400ms forwards;
   z-index: 2;
   overflow: hidden scroll;
-}
 
+  @media screen and (max-width: 800px) {
+    width: calc(100vw - 80px);
+  }
+}
 
 section {
   h3 {
@@ -107,6 +110,16 @@ section {
       flex-direction: column;
       justify-content: center;
       gap: 20px;
+    }
+  }
+
+  &__return-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    @media screen and (min-width: 800px) {
+      display: none;
     }
   }
 }
