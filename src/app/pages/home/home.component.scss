@@ -29,6 +29,10 @@
     margin-bottom: 50px;
   }
 
+  @media screen and (max-width: 400px) {
+    transform: scale(0.8) 
+  }
+
   &__logo {
     margin-bottom: 10px;
     width: 110px;
@@ -36,19 +40,39 @@
     position: absolute;
   }
 
+  &__left-side {
+    @media screen and (max-width: 1111px) {
+      width: 353px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
   &__title {
-    display: flex;
-    white-space: nowrap;
-    gap: 0 2ch;
+    display: grid;
+    grid-template-columns: auto 0;
+    grid-gap: 0 2ch;
     width: 450px;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    margin: 0 0 10px;
+
+    @media screen and (max-width: 1110px) {
+      width: fit-content;
+      margin: 0;
+    }
 
     h1 {
       font-style: normal;
       font-weight: 700;
       font-size: 55px;
       line-height: 60px;
+      white-space: nowrap;
+
+      @media screen and (max-width: 500px) {
+        font-size: 40px;
+        line-height: 45px;
+      }
     }
 
     &-primary {
@@ -58,7 +82,9 @@
 
     &-secondary {
       color: #ea686d;
+      width: fit-content;
       position: relative;
+      transform: translateX(-132%);
 
       &::after {
         position: absolute;
@@ -80,12 +106,22 @@
     font-size: 25px;
     line-height: 30px;
     color: #2f3e77;
+    width: 100%;
+    
+    @media screen and (max-width: 500px) {
+      font-size: 16px;
+      line-height: 30px;
+    }
   }
 
   &__search {
     display: flex;
     align-items: center;
     margin-top: 31px;
+
+    @media screen and (max-width: 500px) {
+      transform: scale(0.8) translateX(-12%);
+    }
 
     &-input {
       width: 333px;
@@ -99,7 +135,7 @@
       padding: 0 15px;
       font-size: 16px;
       color: #2f3e77;
-      transition-duration: .1s;
+      transition-duration: 0.1s;
 
       &:focus {
         outline: 2px solid #2f3d7754 !important;
@@ -119,22 +155,26 @@
       line-height: 30px;
       text-align: center;
       color: #ffffff;
-      transition: .1s;
+      transition: 0.1s;
       cursor: pointer;
 
       &:hover {
         background: #ff888e;
       }
-    
+
       &:active {
         background: #d86c71;
       }
-    
+
       &:focus {
         outline: none;
         box-shadow: 0px 0px 5px 2px rgba(234, 104, 109, 0.4);
       }
     }
+  }
+
+  &__banner {
+    width: min(464px, calc(100% - 10px));
   }
 }
 

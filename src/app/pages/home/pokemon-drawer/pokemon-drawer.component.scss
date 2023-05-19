@@ -15,6 +15,8 @@
 
   @media screen and (max-width: 800px) {
     width: calc(100vw - 80px);
+    height: calc(100vh - 140px);
+    padding-top: 90px;
   }
 }
 
@@ -41,6 +43,11 @@ section {
   &__subtitle {
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width: 800px) {
+      flex-direction: column;
+      gap: 5px;
+    }
 
     &-pokemon-id {
       font-style: normal;
